@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isabel Simental Ruiz — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0d;
+    --paper: #faf8f4;
+    --accent: #c4622d;
+    --accent2: #2d5a8e;
+    --muted: #7a7369;
+    --line: #e0dbd3;
+    --card: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 72px 64px 72px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    background: var(--ink);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #c4622d22 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-right-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #2a2826;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.4;
+  }
+
+  .hero-right-grid div { background: var(--ink); }
+
+  .hero-monogram {
+    position: relative;
+    z-index: 2;
+    font-family: 'DM Serif Display', serif;
+    font-size: 180px;
+    color: #ffffff08;
+    letter-spacing: -8px;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .hero-accent-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 420px;
+  }
+
+  .hero-statement {
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 460px;
+    margin-bottom: 48px;
+    color: #3a3733;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .hero-statement::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 14px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--accent); }
+
+  .btn-outline {
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(250,248,244,0.85);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 72px; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 48px;
+  }
+
+  /* ── PITCH SECTION ── */
+  .pitch {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .pitch .section-label { color: var(--accent); }
+
+  .pitch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .pitch h2 { color: var(--paper); }
+
+  .pitch-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .pitch-card {
+    border: 1px solid #2d2b28;
+    padding: 28px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .pitch-card:hover { border-color: var(--accent); }
+
+  .pitch-card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: #2d2b28;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .pitch-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .pitch-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #b0aaa3;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience { background: var(--paper); }
+
+  .exp-timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .exp-item {
+    position: relative;
+    margin-bottom: 52px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .exp-item.visible { opacity: 1; transform: translateY(0); }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .exp-date {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .exp-company {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5a5550;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-section {
+    background: #f0ece5;
+    padding: 100px 72px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+  }
+
+  .skill-block {
+    background: var(--card);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .skill-block:hover { background: var(--ink); }
+  .skill-block:hover .skill-title { color: var(--paper); }
+  .skill-block:hover .skill-tags span { border-color: #3a3733; color: #b0aaa3; }
+  .skill-block:hover .skill-icon { color: var(--accent); }
+
+  .skill-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+
+  .skill-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+    transition: color 0.2s;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tags span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  /* ── CERTS ── */
+  .certs { background: var(--paper); }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    transition: all 0.25s;
+  }
+
+  .cert-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(196,98,45,0.08);
+  }
+
+  .cert-badge {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .cert-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .cert-org {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 100px 72px;
+  }
+
+  .contact h2 { color: var(--paper); margin-bottom: 24px; }
+
+  .contact-sub {
+    font-size: 17px;
+    color: #8a8580;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    padding: 14px 28px;
+    border: 1px solid #3a3733;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .eyebrow { animation-delay: 0.1s; }
+  h1 { animation-delay: 0.25s; }
+  .subtitle { animation-delay: 0.35s; }
+  .hero-statement { animation-delay: 0.45s; }
+  .hero-ctas { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: 80px;
+    }
+
+    .hero-right { display: none; }
+    .hero-left { padding: 60px 28px; }
+
+    section, .skills-section, .contact { padding: 72px 28px; }
+
+    .pitch-grid { grid-template-columns: 1fr; gap: 40px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr; }
+    .exp-timeline { padding-left: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ISR</div>
+  <ul class="nav-links">
+    <li><a href="#pitch">Propuesta de Valor</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Data Scientist · Durango, México</div>
+    <h1>Isabel<br>Simental <em>Ruiz</em></h1>
+    <p class="subtitle">Ingeniera en Desarrollo de Software &amp; MBA con formación especializada en Data Science</p>
+    <p class="hero-statement">
+      Integro visión de negocio con análisis de datos. No solo sé analizar información — entiendo el problema, comunico hallazgos con claridad y propongo soluciones accionables que generan impacto real.
+    </p>
+    <div class="hero-ctas">
+      <a href="#pitch" class="btn-primary">Ver mi perfil</a>
+      <a href="#contacto" class="btn-outline">Contactar</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-grid">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="hero-monogram">IS</div>
+    <div class="hero-accent-line"></div>
+  </div>
+</div>
+
+<!-- PITCH / PROPUESTA DE VALOR -->
+<section class="pitch" id="pitch">
+  <div class="pitch-grid">
+    <div>
+      <div class="section-label">Propuesta de valor</div>
+      <h2>Lo que me hace diferente</h2>
+      <p style="color:#8a8580; font-size:16px; line-height:1.75; margin-bottom:32px;">
+        Mi trayectoria combina dos mundos que raramente conviven en un mismo perfil: más de 10 años operando sistemas críticos con alto impacto y una formación técnica profunda en ciencia de datos con proyectos reales.
+      </p>
+      <p style="color:#8a8580; font-size:16px; line-height:1.75;">
+        El resultado es una profesional que <strong style="color:var(--paper)">traduce datos en decisiones</strong>, no solo en reportes.
+      </p>
+    </div>
+    <div class="pitch-cards">
+      <div class="pitch-card">
+        <div class="pitch-card-num">01</div>
+        <h3>Contexto operativo</h3>
+        <p>No necesito que me expliquen el negocio. Vengo de gestionar infraestructura crítica en gobierno y sector privado, tomando decisiones bajo presión con información incompleta.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-card-num">02</div>
+        <h3>Análisis técnico profundo</h3>
+        <p>17 proyectos reales con Python, SQL, ML y Power BI. Modelos predictivos, series temporales, NLP y segmentación aplicados a problemas de negocio concretos.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-card-num">03</div>
+        <h3>Comunicación de resultados</h3>
+        <p>Experiencia presentando a stakeholders y liderando equipos multidisciplinarios. Convierto hallazgos complejos en narrativas claras para la toma de decisiones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section class="experience" id="experiencia">
+  <div class="section-label">Trayectoria</div>
+  <h2>Experiencia profesional</h2>
+  <div class="exp-timeline">
+
+    <div class="exp-item">
+      <div class="exp-date">Ago. 2024 – Actualidad</div>
+      <div class="exp-role">Coordinadora General de Mantenimiento</div>
+      <div class="exp-company">Grupo Garza Limón · Durango, Zacatecas y Chihuahua</div>
+      <ul class="exp-bullets">
+        <li>Coordinación de equipos técnicos multizona en infraestructura de telecomunicaciones</li>
+        <li>Planeación estratégica para optimizar tiempos de respuesta y cobertura operativa</li>
+        <li>Gestión de recursos humanos, seguimiento a KPIs y validación de entregables</li>
+        <li>Coordinación interdepartamental para resolución de incidencias críticas</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jul. 2024 – Abr. 2025</div>
+      <div class="exp-role">Data Science Bootcamp</div>
+      <div class="exp-company">TripleTen · Formación técnica intensiva</div>
+      <ul class="exp-bullets">
+        <li>17 proyectos con datos reales: clasificación, regresión, forecasting y NLP</li>
+        <li>Stack técnico: Python (Pandas, NumPy, scikit-learn, XGBoost), SQL, Power BI</li>
+        <li>Implementación de soluciones ML orientadas a impacto de negocio</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Sep. 2016 – Jun. 2022</div>
+      <div class="exp-role">Jefa de Departamento de Telecomunicaciones</div>
+      <div class="exp-company">Gobierno del Estado de Durango</div>
+      <ul class="exp-bullets">
+        <li>Supervisión de telecomunicaciones y almacenamiento de datos para oficinas gubernamentales</li>
+        <li>Administración de proyectos tecnológicos y presupuestos anuales</li>
+        <li>Gestión de contratos y proveedores de bienes y servicios TI</li>
+        <li>Documentación técnica para adquisiciones y contratos institucionales</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jul. 2012 – Ago. 2013</div>
+      <div class="exp-role">Analista de Proyectos</div>
+      <div class="exp-company">Gobierno del Estado de Durango</div>
+      <ul class="exp-bullets">
+        <li>Implementación de infraestructura de red</li>
+        <li>Gestión de riesgos y propuestas de mejora operativa</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<section class="skills-section" id="habilidades">
+  <div class="section-label">Competencias</div>
+  <h2>Stack de habilidades</h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-icon">⬡</div>
+      <div class="skill-title">Análisis de Datos</div>
+      <div class="skill-tags">
+        <span>Python</span><span>SQL</span><span>Pandas</span><span>NumPy</span><span>Power BI</span><span>Estadística</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-icon">◈</div>
+      <div class="skill-title">Machine Learning</div>
+      <div class="skill-tags">
+        <span>scikit-learn</span><span>XGBoost</span><span>Clasificación</span><span>Regresión</span><span>Series temporales</span><span>NLP</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-icon">◇</div>
+      <div class="skill-title">Gestión de Proyectos</div>
+      <div class="skill-tags">
+        <span>KPIs</span><span>Stakeholders</span><span>Presupuestos</span><span>Equipos multizona</span><span>Contratos TI</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-icon">◉</div>
+      <div class="skill-title">Infraestructura TI</div>
+      <div class="skill-tags">
+        <span>Telecomunicaciones</span><span>Redes</span><span>Almacenamiento</span><span>Soporte técnico</span><span>ISO 27001</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-icon">△</div>
+      <div class="skill-title">Liderazgo</div>
+      <div class="skill-tags">
+        <span>Comunicación ejecutiva</span><span>Toma de decisiones</span><span>Mejora continua</span><span>Trabajo en equipo</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-icon">□</div>
+      <div class="skill-title">Formación</div>
+      <div class="skill-tags">
+        <span>MBA</span><span>Ing. Software</span><span>Data Scientist cert.</span><span>PMP Google</span><span>ITIL v3</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICACIONES -->
+<section class="certs">
+  <div class="section-label">Credenciales</div>
+  <h2>Certificaciones</h2>
+  <div class="certs-grid">
+    <div class="cert-item">
+      <div class="cert-badge">🎓</div>
+      <div>
+        <div class="cert-name">Data Scientist</div>
+        <div class="cert-org">TripleTen · 2024–2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">📋</div>
+      <div>
+        <div class="cert-name">Google Project Management Certificate</div>
+        <div class="cert-org">Coursera · 2023</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">🔒</div>
+      <div>
+        <div class="cert-name">ISO/IEC 27001</div>
+        <div class="cert-org">BSI Training Academy · 2019</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">⚙️</div>
+      <div>
+        <div class="cert-name">ITIL v3</div>
+        <div class="cert-org">Tecnológico de Monterrey · 2015</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contact" id="contacto">
+  <div class="section-label" style="color:var(--accent)">¿Hablamos?</div>
+  <h2>Conectemos</h2>
+  <p class="contact-sub">
+    Estoy abierta a oportunidades en análisis de datos, ciencia de datos y roles donde pueda conectar operación con inteligencia de datos.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:isabel.simental@gmail.com" class="contact-link">✉ isabel.simental@gmail.com</a>
+    <a href="tel:6181499530" class="contact-link">📞 618 149 9530</a>
+    <a href="https://www.linkedin.com/in/isabel-simental-ruiz" target="_blank" class="contact-link">in LinkedIn</a>
+    <a href="https://github.com/Is1mental" target="_blank" class="contact-link">⌥ GitHub</a>
+  </div>
+</section>
+
+<script>
+  // Scroll animation for experience items
+  const items = document.querySelectorAll('.exp-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  items.forEach(item => observer.observe(item));
+</script>
+
+</body>
+</html>
